@@ -138,7 +138,7 @@ def evaluate_models(datasets):
             metrics = evaluate_model(y_test, y_pred)
             print(f"  Metrics for {clf_name}: {metrics}")
 
-            # Generate learning curves
+            # generate learning curves
             train_sizes, train_scores, test_scores = learning_curve(
                 best_model,
                 X_train_scaled,
@@ -149,15 +149,10 @@ def evaluate_models(datasets):
                 train_sizes=np.linspace(0.1, 1.0, 5),
             )
 
-            # Store additional data for post-analysis
             course_performance[clf_name] = {
-                "best_params": best_params,
-                "performance": metrics,
-                "y_pred": y_pred,  # predictions
-                "y_test": y_test,  # true labels
-                "X_train_scaled": X_train_scaled,  # training data for learning curves
-                "y_train": y_train,  # training labels for learning curves
-                "learning_curve": {  # Learning curve data
+                "best_params": best_params,  # bets params found after hyperparams optimization
+                "performance": metrics,  # auc, f1, acc
+                "learning_curve": {  # learning curve data
                     "train_sizes": train_sizes,
                     "train_scores": train_scores,
                     "test_scores": test_scores,

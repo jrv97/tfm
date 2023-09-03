@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import LearningCurveDisplay
 
 
 def plot_results(overall_performance, save_path="figs/"):
@@ -31,31 +32,12 @@ def plot_results(overall_performance, save_path="figs/"):
             train_scores = lc_data["train_scores"]
             test_scores = lc_data["test_scores"]
 
-            train_mean = np.mean(train_scores, axis=1)
-            train_std = np.std(train_scores, axis=1)
-            test_mean = np.mean(test_scores, axis=1)
-            test_std = np.std(test_scores, axis=1)
-
-            plt.figure(figsize=(8, 6))
-            plt.plot(train_sizes, train_mean, label="Training score", color="blue")
-            plt.fill_between(
-                train_sizes,
-                train_mean - train_std,
-                train_mean + train_std,
-                color="lightblue",
+            display = LearningCurveDisplay(
+                train_scores=train_scores,
+                test_scores=test_scores,
+                train_sizes=train_sizes,
             )
-            plt.plot(
-                train_sizes, test_mean, label="Cross-validation score", color="red"
-            )
-            plt.fill_between(
-                train_sizes,
-                test_mean - test_std,
-                test_mean + test_std,
-                color="lightcoral",
-            )
+            display.plot()
             plt.title(f"Learning Curve: {clf_name} on {course_name}")
-            plt.xlabel("Training Set Size")
-            plt.ylabel("Accuracy Score")
-            plt.legend(loc="best")
             plt.savefig(f"{save_path}/lc_{course_name}_{clf_name}.png")
             plt.close()
