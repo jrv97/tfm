@@ -1,10 +1,9 @@
-import warnings
-
+import numpy as np
 from sklearn.discriminant_analysis import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.model_selection import GridSearchCV, learning_curve, train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
@@ -13,9 +12,6 @@ from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
 from config import TARGET
-
-warnings.simplefilter(action="ignore", category=FutureWarning)
-warnings.simplefilter(action="ignore", category=DeprecationWarning)
 
 
 def evaluate_model(y_test, y_pred):
@@ -71,7 +67,7 @@ def evaluate_models(datasets):
             "params": {
                 "hidden_layer_sizes": [(100,), (50, 50)],
                 "activation": ["tanh", "relu"],
-                "max_iter": [200, 300],
+                "max_iter": [200, 300, 500, 1000],
             },
         },
         "Decision Tree": {
@@ -107,7 +103,6 @@ def evaluate_models(datasets):
             },
         },
     }
-
     overall_performance = {}
     split = split_datasets(datasets)
     for course_name, data in split.items():
@@ -143,9 +138,30 @@ def evaluate_models(datasets):
             metrics = evaluate_model(y_test, y_pred)
             print(f"  Metrics for {clf_name}: {metrics}")
 
+            # Generate learning curves
+            train_sizes, train_scores, test_scores = learning_curve(
+                best_model,
+                X_train_scaled,
+                y_train,
+                cv=5,
+                scoring="accuracy",
+                n_jobs=-1,
+                train_sizes=np.linspace(0.1, 1.0, 5),
+            )
+
+            # Store additional data for post-analysis
             course_performance[clf_name] = {
                 "best_params": best_params,
                 "performance": metrics,
+                "y_pred": y_pred,  # predictions
+                "y_test": y_test,  # true labels
+                "X_train_scaled": X_train_scaled,  # training data for learning curves
+                "y_train": y_train,  # training labels for learning curves
+                "learning_curve": {  # Learning curve data
+                    "train_sizes": train_sizes,
+                    "train_scores": train_scores,
+                    "test_scores": test_scores,
+                },
             }
 
         overall_performance[course_name] = course_performance
@@ -157,3 +173,5 @@ def evaluate_models(datasets):
             print(
                 f"{clf_name} with {clf_performance['best_params']}: {clf_performance['performance']}"
             )
+
+    return overall_performance
