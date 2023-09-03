@@ -13,9 +13,10 @@ def load_datasets(input_folder, oversampling=None):
         if filename.endswith(".csv"):
             course_name = filename[:-4]
             df = pd.read_csv(f"{input_folder}/{filename}")
-            datasets[course_name] = clean_dataset(df)
+            clean = clean_dataset(df)
+            datasets[course_name] = clean
             if oversampling is not None:
-                datasets[course_name] = augment_data(df, oversampling)
+                datasets[course_name] = augment_data(clean, oversampling)
 
     return datasets
 
