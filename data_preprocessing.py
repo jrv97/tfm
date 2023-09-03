@@ -30,12 +30,6 @@ def clean_dataset(df):
     return df
 
 
-# def load_data(data_path):
-#     df = pd.read_csv(data_path)
-#     df = df.drop(IGNORED_FEAT, axis=1)
-#     return df
-
-
 def augment_data(df, oversampling_technique):
     X = df.drop(TARGET, axis=1)
     y = df[TARGET]

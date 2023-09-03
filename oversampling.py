@@ -38,9 +38,3 @@ def oversample_data(X, y, technique):
     X_res, y_res = sampler.fit_resample(X, y)
 
     return X_res, y_res
-    # # Combine resampled data into a DataFrame
-    # df_resampled = pd.concat(
-    #     [pd.DataFrame(X_res, columns=X.columns), pd.Series(y_res, name="mark")], axis=1
-    # )
-
-    # return df_resampled
