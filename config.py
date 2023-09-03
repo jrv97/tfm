@@ -1,3 +1,6 @@
-data_path = "data/moodle_numerico.csv"
-ignored_features = ["course"]
-target = "mark"
+from oversampling import OversamplingTechniques
+
+DATA_PATH = "data/"
+IGNORED_FEAT = ["course"]
+TARGET = "mark"
+OVERSAMPLING_TECHNIQUE = OversamplingTechniques.SMOTE
