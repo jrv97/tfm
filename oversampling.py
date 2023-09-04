@@ -3,6 +3,8 @@ from enum import Enum
 from imblearn.over_sampling import SVMSMOTE  # SMOTETomek,
 from imblearn.over_sampling import SMOTE, BorderlineSMOTE, RandomOverSampler
 
+from utils import get_labels_counts
+
 # from imblearn.combine import SMOTEENN
 
 
@@ -15,9 +17,10 @@ class OversamplingTechniques(Enum):
     # SMOTE_TOMEK = "smote_tomek"
 
 
-def oversample_data(X, y, technique):
-    minority_class_size = min(y.value_counts())
-    n_neighbors_value = minority_class_size - 1  # One less than the minority class size
+def oversample_data(X, y, technique, n_neighbors_value=None):
+    if n_neighbors_value is None:
+        _, counts = get_labels_counts(y)
+        n_neighbors_value = min(counts) - 1  # One less than the minority class size
 
     # Choose oversampling technique
     if technique == OversamplingTechniques.SMOTE:
