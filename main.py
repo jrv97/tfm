@@ -1,6 +1,6 @@
 import warnings
 
-from config import DATA_PATH, OVERSAMPLING_TECHNIQUE
+from config import MOODLE_DATA_PATH, OVERSAMPLING_TECHNIQUE
 from data_preprocessing import load_datasets
 from eval import evaluate_models
 from plotting import (
@@ -13,7 +13,7 @@ warnings.simplefilter(action="ignore")
 
 
 def main():
-    data_path = DATA_PATH
+    data_path = MOODLE_DATA_PATH
     oversampling_technique = OVERSAMPLING_TECHNIQUE
     datasets = load_datasets(data_path, oversampling_technique)
     overall_performance = evaluate_models(datasets)
