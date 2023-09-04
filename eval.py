@@ -52,7 +52,15 @@ def evaluate_models(datasets):
     classifiers = {
         "RandomForest": {
             "model": RandomForestClassifier(),
-            "params": {"n_estimators": [100, 200], "min_samples_leaf": [1, 2]},
+            "params": {  # https://www.kaggle.com/code/sunayanagawde/ml-algorithms-usage-and-prediction?scriptVersionId=120249289&cellId=75
+                "bootstrap": [False, True],
+                "max_depth": [5, 8, 10, 20],
+                "max_features": [3, 4, 5, None],
+                "min_samples_split": [2, 10, 12],
+                "n_estimators": [100, 200, 300],
+                "min_samples_leaf": [1, 2],
+                "max_depth": [5, 8, 10, 15, 20],
+            },
         },
         "K-nearest-neighbor": {
             "model": KNeighborsClassifier(),
@@ -86,7 +94,7 @@ def evaluate_models(datasets):
             },
         },
         "Support Vector Machine": {
-            "model": SVC(),
+            "model": SVC(),  # https://www.kaggle.com/code/sunayanagawde/ml-algorithms-usage-and-prediction?scriptVersionId=120249289&cellId=62
             "params": {
                 "kernel": ["linear", "rbf"],
                 "C": [0.1, 1, 10],

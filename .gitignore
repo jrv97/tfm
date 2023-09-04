@@ -137,4 +137,4 @@ ui-tests/.yarn/*
 ui-tests/.pnp.*
 
 # figs
-figs/
+results/figs/

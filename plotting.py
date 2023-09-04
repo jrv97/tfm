@@ -7,7 +7,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import LearningCurveDisplay
 
 
-def plot_results(overall_performance, save_path="figs/"):
+def plot_results(overall_performance, save_path="results/figs/"):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
