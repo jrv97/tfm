@@ -11,8 +11,6 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
-from config import TARGET
-
 
 def evaluate_model(y_test, y_pred):
     accuracy = accuracy_score(y_test, y_pred)
@@ -24,12 +22,12 @@ def evaluate_model(y_test, y_pred):
     return metrics
 
 
-def split_datasets(datasets):
+def __split_datasets(datasets, target):
     split_datasets = {}
 
     for course_name, df in datasets.items():
-        X = df.drop(TARGET, axis=1)
-        y = df[TARGET]
+        X = df.drop(target, axis=1)
+        y = df[target]
 
         # X_train, X_test, y_train, y_test = train_test_split(
         #     X, y, test_size=0.3, stratify=y, random_state=42
@@ -48,7 +46,7 @@ def split_datasets(datasets):
     return split_datasets
 
 
-def evaluate_models(datasets):
+def evaluate_models(datasets, target):
     classifiers = {
         "RandomForest": {
             "model": RandomForestClassifier(),
@@ -112,7 +110,7 @@ def evaluate_models(datasets):
         },
     }
     overall_performance = {}
-    split = split_datasets(datasets)
+    split = __split_datasets(datasets, target)
     for course_name, data in split.items():
         print(f"Processing data for {course_name}...")
 

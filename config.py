@@ -1,8 +1,10 @@
-from imblearn.over_sampling import SMOTE, BorderlineSMOTE, RandomOverSampler
+from imblearn.over_sampling import SMOTE
 
-MOODLE_DATA_PATH = "data/"
-KAGGLE_DATA_PATH = "data/kaggle/dataset.csv"
-KAGGLE_TARGET = "Target"
-IGNORED_FEAT = ["course"]
-TARGET = "mark"
 OVERSAMPLING_TECHNIQUE = SMOTE
+# moodle dataset
+MOODLE_DATA_PATH = "data/"
+MOODLE_IGNORED_FEAT = ["course"]
+MOODLE_TARGET = "mark"
+# kaggle dataset
+KAGGLE_DATA_PATH = "data/kaggle/"
+KAGGLE_TARGET = "Target"
