@@ -160,6 +160,8 @@ def evaluate_models(datasets):
             course_performance[clf_name] = {
                 "best_params": best_params,  # bets params found after hyperparams optimization
                 "performance": metrics,  # auc, f1, acc
+                "y_pred": y_pred,  # predictions
+                "y_test": y_test,  # true labels
                 "learning_curve": {  # learning curve data
                     "train_sizes": train_sizes,
                     "train_scores": train_scores,
