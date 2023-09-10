@@ -15,7 +15,7 @@ from xgboost import XGBClassifier
 def evaluate_model(y_test, y_pred):
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average="weighted")
-    auc = roc_auc_score(y_test, y_pred)
+    auc = roc_auc_score(y_test, y_pred, multi_class='ovr', average='macro')
 
     metrics = {"accuracy": accuracy, "f1_score": f1, "roc_auc": auc}
 
@@ -137,11 +137,12 @@ def evaluate_models(datasets, target):
             grid_search.fit(X_train_scaled, y_train)
 
             best_params = grid_search.best_params_
+            print(best_params)
             best_model = grid_search.best_estimator_
 
             y_pred = best_model.predict(X_test_scaled)
-
-            metrics = evaluate_model(y_test, y_pred)
+            y_pred_prob = best_model.predict_proba(X_test_scaled)
+            metrics = evaluate_model(y_test, y_pred_prob)
             print(f"  Metrics for {clf_name}: {metrics}")
 
             # generate learning curves
