@@ -2,7 +2,7 @@ import itertools
 
 import numpy as np
 import pandas as pd
-from imblearn.over_sampling import ADASYN, SMOTENC, BorderlineSMOTE
+from imblearn.over_sampling import ADASYN, SMOTE, SMOTENC, SVMSMOTE, BorderlineSMOTE
 from scipy.stats import zscore
 from sklearn.ensemble import ExtraTreesClassifier, IsolationForest
 from sklearn.feature_selection import (
@@ -15,7 +15,7 @@ from sklearn.neighbors import LocalOutlierFactor
 from xgboost import XGBClassifier
 
 
-def remove_outliers_isolation_forest(X_train, y_train, K=10, top_feats=10, plot=True):
+def remove_outliers_isolation_forest(X_train, y_train):
     from sklearn.ensemble import IsolationForest
 
     isf = IsolationForest(n_jobs=-1, random_state=1)
@@ -108,32 +108,36 @@ def features_selection_mutual_information(X_train, y_train, X_test, y_test, K=10
     return X_train[selected_features], y_train, X_test[selected_features], y_test
 
 
-def smote(X_train, y_train, X_test, y_test):
-    return X_train, y_train, X_test, y_test
+def smote(X_train, y_train, K=10):
+    sm = SMOTE(k_neighbors=K)
+    X_resampled, y_resampled = sm.fit_resample(X_train, y_train)
+    return X_resampled, y_resampled
 
 
-def adasyn(X_train, y_train, X_test, y_test, K=10):
+def adasyn(X_train, y_train, K=10):
     ada = ADASYN(n_neighbors=K)
     X_resampled, y_resampled = ada.fit_resample(X_train, y_train)
-    return X_resampled, y_resampled, X_test, y_test
+    return X_resampled, y_resampled
 
 
-def svm_smote(X_train, y_train, X_test, y_test):
-    return X_train, y_train, X_test, y_test
+def svm_smote(X_train, y_train, K=10):
+    svmsm = SVMSMOTE(k_neighbors=K)
+    X_resampled, y_resampled = svmsm.fit_resample(X_train, y_train)
+    return X_resampled, y_resampled
 
 
-def smote_borderline(X_train, y_train, X_test, y_test, K=10):
+def smote_borderline(X_train, y_train, K=10):
     blsm = BorderlineSMOTE(k_neighbors=K)
     X_resampled, y_resampled = blsm.fit_resample(X_train, y_train)
-    return X_resampled, y_resampled, X_test, y_test
+    return X_resampled, y_resampled
 
 
-def nc_smote(X_train, y_train, X_test, y_test, categorical_features=None, K=10):
+def nc_smote(X_train, y_train, categorical_features=None, K=10):
     # Note: `categorical_features` is a boolean list indicating which features are categorical.
     # If not provided, the method will assume all features are continuous.
     smote_nc = SMOTENC(categorical_features=categorical_features, k_neighbors=K)
     X_resampled, y_resampled = smote_nc.fit_resample(X_train, y_train)
-    return X_resampled, y_resampled, X_test, y_test
+    return X_resampled, y_resampled
 
 
 features_selection = [
