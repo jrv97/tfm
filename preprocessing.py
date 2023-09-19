@@ -66,10 +66,18 @@ def remove_outliers_isolation_forest(X_train, y_train, contamination=0.05):
     return X_train[valid_samples], y_train[valid_samples]
 
 
+def remove_outliers_none(X_train, y_train):
+    return X_train, y_train
+
+
 def features_selection_rfe(X_train, y_train, X_test, y_test):
     rfe = RFE(estimator=XGBClassifier(n_jobs=-1, random_state=1))
     rfe.fit(X_train, y_train)
-    return X_train[rfe.support_], y_train, X_test[rfe.support_], y_test
+
+    # Get the columns selected by RFE
+    selected_columns = X_train.columns[rfe.support_]
+
+    return X_train[selected_columns], y_train, X_test[selected_columns], y_test
 
 
 def features_selection_extratrees(X_train, y_train, X_test, y_test, top_feats=10):
@@ -80,7 +88,10 @@ def features_selection_extratrees(X_train, y_train, X_test, y_test, top_feats=10
     indices = np.argsort(importances)[::-1]
     indices = indices[:top_feats]
 
-    return X_train[indices], y_train, X_test[indices], y_test
+    # Get the column names for the top features
+    top_feature_names = X_train.columns[indices]
+
+    return X_train[top_feature_names], y_train, X_test[top_feature_names], y_test
 
 
 def features_selection_variance_threshold(X_train, y_train, X_test, y_test):
@@ -108,54 +119,48 @@ def features_selection_mutual_information(X_train, y_train, X_test, y_test, K=10
     return X_train[selected_features], y_train, X_test[selected_features], y_test
 
 
-def smote(X_train, y_train, K=10):
+def features_selection_none(X_train, y_train, X_test, y_test):
+    return X_train, y_train, X_test, y_test
+
+
+def oversampling_smote(X_train, y_train, K=10):
     sm = SMOTE(k_neighbors=K)
     X_resampled, y_resampled = sm.fit_resample(X_train, y_train)
     return X_resampled, y_resampled
 
 
-def adasyn(X_train, y_train, K=10):
+def oversampling_adasyn(X_train, y_train, K=10):
     ada = ADASYN(n_neighbors=K)
     X_resampled, y_resampled = ada.fit_resample(X_train, y_train)
     return X_resampled, y_resampled
 
 
-def svm_smote(X_train, y_train, K=10):
+def oversampling_svm_smote(X_train, y_train, K=10):
     svmsm = SVMSMOTE(k_neighbors=K)
     X_resampled, y_resampled = svmsm.fit_resample(X_train, y_train)
     return X_resampled, y_resampled
 
 
-def smote_borderline(X_train, y_train, K=10):
+def oversampling_smote_borderline(X_train, y_train, K=10):
     blsm = BorderlineSMOTE(k_neighbors=K)
     X_resampled, y_resampled = blsm.fit_resample(X_train, y_train)
     return X_resampled, y_resampled
 
 
-def nc_smote(X_train, y_train, categorical_features=None, K=10):
+def oversampling_nc_smote(X_train, y_train, K=10):
     # Note: `categorical_features` is a boolean list indicating which features are categorical.
     # If not provided, the method will assume all features are continuous.
-    smote_nc = SMOTENC(categorical_features=categorical_features, k_neighbors=K)
+    smote_nc = SMOTENC(categorical_features="auto", k_neighbors=K)
     X_resampled, y_resampled = smote_nc.fit_resample(X_train, y_train)
     return X_resampled, y_resampled
 
 
-features_selection = [
-    features_selection_extratrees,
-    features_selection_mutual_information,
-    features_selection_rfe,
-    features_selection_variance_threshold,
-]
+def oversampling_none(X_train, y_train):
+    return X_train, y_train
 
-oversampling = [
-    smote,
-    svm_smote,
-    adasyn,
-    smote_borderline,
-    nc_smote,
-]
 
 remove_outliers = [
+    remove_outliers_none,
     remove_outliers_isolation_forest,
     remove_outliers_zscore,
     remove_outliers_iqr,
@@ -163,20 +168,32 @@ remove_outliers = [
     remove_outliers_lof,
 ]
 
+features_selection = [
+    features_selection_none,
+    features_selection_extratrees,
+    features_selection_mutual_information,
+    features_selection_rfe,
+    features_selection_variance_threshold,
+]
+
+oversampling = [
+    oversampling_none,
+    oversampling_smote,
+    oversampling_svm_smote,
+    oversampling_adasyn,
+    oversampling_smote_borderline,
+    oversampling_nc_smote,
+]
+
 ALL_PREPROCESSING_OPTIONS = [
+    remove_outliers,
     features_selection,
     oversampling,
-    remove_outliers,
 ]
 
 
 def get_all_configurations():
-    for r in range(1, len(ALL_PREPROCESSING_OPTIONS) + 1):
-        for subset in itertools.combinations(ALL_PREPROCESSING_OPTIONS, r):
-            all_combinations = list(itertools.product(*subset))
-
-            for combination in all_combinations:
-                yield combination
+    return itertools.product(*ALL_PREPROCESSING_OPTIONS)
 
 
 PREPROCESSING_CONFIGURATIONS = list(get_all_configurations())

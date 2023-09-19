@@ -2,11 +2,12 @@ from imblearn.over_sampling import SMOTE
 
 OVERSAMPLING_TECHNIQUE = SMOTE
 # moodle dataset
-MOODLE_DATA_PATH = "data/"
+MOODLE_DATA_PATH = "data/base/moodle_numerico.csv"
 MOODLE_IGNORED_FEAT = ["course"]
 MOODLE_TARGET = "mark"
 # kaggle dataset
-KAGGLE_DATA_PATH = "data/kaggle/"
+KAGGLE_DATA_PATH = "data/kaggle/dataset.csv"
+KAGGLE_IGNORED_LABELS = ["Enrolled"]
 KAGGLE_TARGET = "Target"
 # student prediction dataset
 STUDENT_PRED_PATH = "data/student_grade_prediction/train_validate/csv/none.csv"
