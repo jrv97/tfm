@@ -1,19 +1,21 @@
 import itertools
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from imblearn.over_sampling import ADASYN, SMOTENC, BorderlineSMOTE
 from scipy.stats import zscore
 from sklearn.ensemble import ExtraTreesClassifier, IsolationForest
-from sklearn.feature_selection import (RFE, SelectKBest, VarianceThreshold,
-                                       mutual_info_classif)
+from sklearn.feature_selection import (
+    RFE,
+    SelectKBest,
+    VarianceThreshold,
+    mutual_info_classif,
+)
 from sklearn.neighbors import LocalOutlierFactor
 from xgboost import XGBClassifier
 
 
-def remove_outliers_isolation_forest(
-    X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True
-):
+def remove_outliers_isolation_forest(X_train, y_train, K=10, top_feats=10, plot=True):
     from sklearn.ensemble import IsolationForest
 
     isf = IsolationForest(n_jobs=-1, random_state=1)
@@ -22,7 +24,7 @@ def remove_outliers_isolation_forest(
     # The predict method returns 1 for inliers and -1 for outliers.
     X_train_filtered = X_train[predictions == 1]
     y_train_filtered = y_train[predictions == 1]
-    return X_train_filtered, y_train_filtered, X_test, y_test
+    return X_train_filtered, y_train_filtered
 
 
 def remove_outliers_zscore(X_train, y_train, threshold=3):
@@ -64,54 +66,24 @@ def remove_outliers_isolation_forest(X_train, y_train, contamination=0.05):
     return X_train[valid_samples], y_train[valid_samples]
 
 
-def features_selection_rfe(
-    X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True
-):
+def features_selection_rfe(X_train, y_train, X_test, y_test):
     rfe = RFE(estimator=XGBClassifier(n_jobs=-1, random_state=1))
     rfe.fit(X_train, y_train)
-
-    selected_features = X_train.columns[rfe.support_].tolist()
-
-    if plot:
-        print("Selected Features by RFE:")
-        print(selected_features)
-        print(len(selected_features))
-
     return X_train[rfe.support_], y_train, X_test[rfe.support_], y_test
 
 
-def features_selection_extratrees(
-    X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True
-):
+def features_selection_extratrees(X_train, y_train, X_test, y_test, top_feats=10):
     forest = ExtraTreesClassifier(n_estimators=250, max_depth=5, random_state=1)
     forest.fit(X_train, y_train)
 
     importances = forest.feature_importances_
-    std = np.std([tree.feature_importances_ for tree in forest.estimators_], axis=0)
     indices = np.argsort(importances)[::-1]
     indices = indices[:top_feats]
-
-    if plot:
-        plt.figure(figsize=(12, 6))
-        plt.title("Top Feature Importances")
-        plt.bar(
-            range(top_feats),
-            importances[indices],
-            yerr=std[indices],
-            align="center",
-            alpha=0.7,
-        )
-        plt.xticks(range(top_feats), X_train.columns[indices], rotation=90)
-        plt.xlabel("Features")
-        plt.ylabel("Importance")
-        plt.show()
 
     return X_train[indices], y_train, X_test[indices], y_test
 
 
-def features_selection_variance_threshold(
-    X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True
-):
+def features_selection_variance_threshold(X_train, y_train, X_test, y_test):
     # Apply Variance Threshold
     var_thr = VarianceThreshold(threshold=0.0)
     var_thr.fit(X_train)
@@ -124,15 +96,10 @@ def features_selection_variance_threshold(
     )
 
 
-def features_selection_mutual_information(
-    X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True
-):
+def features_selection_mutual_information(X_train, y_train, X_test, y_test, K=10):
     # Compute Mutual Information
     mf = mutual_info_classif(X_train, y_train)
     mf = pd.Series(mf, index=X_train.columns)
-    if plot:
-        mf.sort_values(ascending=False).plot(kind="bar", figsize=(14, 7))
-        plt.show()
     # Select the top K features based on Mutual Information
     top_col = SelectKBest(mutual_info_classif, k=K)
     top_col.fit(X_train, y_train)
@@ -141,12 +108,32 @@ def features_selection_mutual_information(
     return X_train[selected_features], y_train, X_test[selected_features], y_test
 
 
-def smote(X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True):
+def smote(X_train, y_train, X_test, y_test):
     return X_train, y_train, X_test, y_test
 
 
-def svm_smote(X_train, y_train, X_test, y_test, K=10, top_feats=10, plot=True):
+def adasyn(X_train, y_train, X_test, y_test, K=10):
+    ada = ADASYN(n_neighbors=K)
+    X_resampled, y_resampled = ada.fit_resample(X_train, y_train)
+    return X_resampled, y_resampled, X_test, y_test
+
+
+def svm_smote(X_train, y_train, X_test, y_test):
     return X_train, y_train, X_test, y_test
+
+
+def smote_borderline(X_train, y_train, X_test, y_test, K=10):
+    blsm = BorderlineSMOTE(k_neighbors=K)
+    X_resampled, y_resampled = blsm.fit_resample(X_train, y_train)
+    return X_resampled, y_resampled, X_test, y_test
+
+
+def nc_smote(X_train, y_train, X_test, y_test, categorical_features=None, K=10):
+    # Note: `categorical_features` is a boolean list indicating which features are categorical.
+    # If not provided, the method will assume all features are continuous.
+    smote_nc = SMOTENC(categorical_features=categorical_features, k_neighbors=K)
+    X_resampled, y_resampled = smote_nc.fit_resample(X_train, y_train)
+    return X_resampled, y_resampled, X_test, y_test
 
 
 features_selection = [
@@ -156,12 +143,27 @@ features_selection = [
     features_selection_variance_threshold,
 ]
 
-oversampling = [smote, svm_smote]
+oversampling = [
+    smote,
+    svm_smote,
+    adasyn,
+    smote_borderline,
+    nc_smote,
+]
 
-remove_outliers = [remove_outliers_isolation_forest]
+remove_outliers = [
+    remove_outliers_isolation_forest,
+    remove_outliers_zscore,
+    remove_outliers_iqr,
+    remove_outliers_dbscan,
+    remove_outliers_lof,
+]
 
-
-ALL_PREPROCESSING_OPTIONS = [features_selection, oversampling, remove_outliers]
+ALL_PREPROCESSING_OPTIONS = [
+    features_selection,
+    oversampling,
+    remove_outliers,
+]
 
 
 def get_all_configurations():
