@@ -7,7 +7,6 @@ from scipy.stats import zscore
 from sklearn.ensemble import ExtraTreesClassifier, IsolationForest
 from sklearn.feature_selection import (
     RFE,
-    SelectKBest,
     VarianceThreshold,
     mutual_info_classif,
 )
@@ -80,43 +79,46 @@ def features_selection_rfe(X_train, y_train, X_test, y_test):
     return X_train[selected_columns], y_train, X_test[selected_columns], y_test
 
 
-def features_selection_extratrees(X_train, y_train, X_test, y_test, top_feats=10):
+def features_selection_extratrees(X_train, y_train, X_test, y_test):
     forest = ExtraTreesClassifier(n_estimators=250, max_depth=5, random_state=1)
     forest.fit(X_train, y_train)
 
     importances = forest.feature_importances_
-    indices = np.argsort(importances)[::-1]
-    indices = indices[:top_feats]
+    threshold = importances.mean()
+    top_feature_names = X_train.columns[importances > threshold]
+    X_train = X_train[top_feature_names]
+    X_test = X_test[top_feature_names]
 
-    # Get the column names for the top features
-    top_feature_names = X_train.columns[indices]
-
-    return X_train[top_feature_names], y_train, X_test[top_feature_names], y_test
+    return X_train, y_train, X_test, y_test
 
 
-def features_selection_variance_threshold(X_train, y_train, X_test, y_test):
+def features_selection_variance_threshold(
+    X_train, y_train, X_test, y_test, threshold=0.0
+):
     # Apply Variance Threshold
-    var_thr = VarianceThreshold(threshold=0.0)
+    var_thr = VarianceThreshold(threshold=threshold)
     var_thr.fit(X_train)
+    X_train = X_train[X_train.columns[var_thr.get_support()]]
+    X_test = X_test[X_test.columns[var_thr.get_support()]]
 
     return (
-        X_train[X_train.columns[var_thr.get_support()]],
+        X_train,
         y_train,
-        X_test[X_test.columns[var_thr.get_support()]],
+        X_test,
         y_test,
     )
 
 
-def features_selection_mutual_information(X_train, y_train, X_test, y_test, K=10):
+def features_selection_mutual_information(X_train, y_train, X_test, y_test):
     # Compute Mutual Information
     mf = mutual_info_classif(X_train, y_train)
     mf = pd.Series(mf, index=X_train.columns)
-    # Select the top K features based on Mutual Information
-    top_col = SelectKBest(mutual_info_classif, k=K)
-    top_col.fit(X_train, y_train)
-    selected_features = X_train.columns[top_col.get_support()]
+    threshold = mf.mean()
+    selected_features = X_train.columns[mf > threshold]
+    X_train = X_train[selected_features]
+    X_test = X_test[selected_features]
 
-    return X_train[selected_features], y_train, X_test[selected_features], y_test
+    return X_train, y_train, X_test, y_test
 
 
 def features_selection_none(X_train, y_train, X_test, y_test):
@@ -164,7 +166,7 @@ remove_outliers = [
     remove_outliers_isolation_forest,
     remove_outliers_zscore,
     remove_outliers_iqr,
-    remove_outliers_dbscan,
+    # remove_outliers_dbscan,
     remove_outliers_lof,
 ]
 

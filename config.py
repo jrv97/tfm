@@ -9,7 +9,7 @@ KAGGLE_IGNORED_FEAT = []
 KAGGLE_IGNORED_LABELS = ["Enrolled"]
 KAGGLE_TARGET = "Target"
 # student prediction dataset
-STUDENT_PRED_PATH = "data/student_grade_prediction/train_validate/csv/none.csv"
+STUDENT_PRED_PATH = "data/student_grade_prediction/original/original.csv"
 STUDENT_PRED_IGNORED_FEAT = []
 STUDENT_PRED_IGNORED_LABELS = []
 STUDENT_PRED_TARGET = "label (fail=1, pass=0)"
