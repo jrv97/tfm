@@ -1,0 +1,21 @@
+,RandomForest,Artificial Neural Network,Decision Tree,Logistic Regression,Support Vector Machine,Naive Bayes,XG-boost,K-nearest-neighbor
+remove_outliers_none + features_selection_none + oversampling_none,0.9375,0.875,0.875,0.875,0.875,0.625,0.9375,
+remove_outliers_none + features_selection_extratrees + oversampling_none,0.9375,0.875,0.9375,0.9375,0.875,0.875,0.9375,0.875
+remove_outliers_none + features_selection_mutual_information + oversampling_none,0.9375,0.9375,0.9375,0.9375,0.875,0.8125,0.9375,0.9375
+remove_outliers_none + features_selection_rfe + oversampling_none,0.9375,0.9375,0.875,0.875,0.875,0.8125,0.9375,0.9375
+remove_outliers_none + features_selection_variance_threshold + oversampling_none,0.9375,0.875,0.9375,0.875,0.875,0.625,0.9375,
+remove_outliers_isolation_forest + features_selection_none + oversampling_none,0.9375,0.875,0.875,0.875,0.875,0.625,0.9375,
+remove_outliers_isolation_forest + features_selection_extratrees + oversampling_none,0.9375,0.875,0.875,0.9375,0.875,0.875,0.9375,0.875
+remove_outliers_isolation_forest + features_selection_mutual_information + oversampling_none,0.9375,0.9375,0.875,0.9375,0.875,0.8125,0.9375,0.9375
+remove_outliers_isolation_forest + features_selection_rfe + oversampling_none,0.9375,0.9375,0.8125,0.875,0.875,0.8125,0.9375,0.9375
+remove_outliers_isolation_forest + features_selection_variance_threshold + oversampling_none,0.9375,0.875,0.875,0.875,0.875,0.625,0.9375,
+remove_outliers_zscore + features_selection_none + oversampling_none,0.9375,0.9375,0.9375,0.875,0.875,0.6875,0.9375,
+remove_outliers_zscore + features_selection_extratrees + oversampling_none,0.9375,0.875,0.9375,0.9375,0.875,0.875,0.9375,0.8125
+remove_outliers_zscore + features_selection_mutual_information + oversampling_none,0.9375,0.9375,0.9375,0.9375,0.875,0.625,0.9375,0.875
+remove_outliers_zscore + features_selection_rfe + oversampling_none,0.9375,0.875,0.9375,0.9375,0.875,0.875,0.875,0.8125
+remove_outliers_zscore + features_selection_variance_threshold + oversampling_none,0.9375,0.875,0.9375,0.875,0.875,0.6875,0.9375,
+remove_outliers_iqr + features_selection_none + oversampling_none,0.875,0.8125,0.875,0.875,0.875,0.875,0.9375,
+remove_outliers_iqr + features_selection_extratrees + oversampling_none,0.9375,0.9375,0.9375,0.875,0.875,0.875,0.9375,0.8125
+remove_outliers_iqr + features_selection_mutual_information + oversampling_none,0.875,0.9375,0.75,0.875,0.875,0.875,0.9375,0.8125
+remove_outliers_iqr + features_selection_rfe + oversampling_none,0.9375,0.9375,0.9375,0.875,0.875,0.8125,0.875,0.8125
+remove_outliers_iqr + features_selection_variance_threshold + oversampling_none,0.875,0.875,0.9375,0.875,0.875,0.875,0.9375,
