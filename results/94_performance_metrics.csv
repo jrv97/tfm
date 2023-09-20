@@ -1,9 +1,0 @@
-Classifier,Best Params,accuracy,f1_score,roc_auc
-RandomForest,"{'bootstrap': True, 'max_depth': 5, 'max_features': 3, 'min_samples_leaf': 2, 'min_samples_split': 12, 'n_estimators': 200}",0.6956521739130435,0.7027714213068904,0.7083333333333334
-K-nearest-neighbor,"{'leaf_size': 30, 'n_neighbors': 5, 'weights': 'distance'}",0.6521739130434783,0.660200668896321,0.675
-Artificial Neural Network,"{'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 200}",0.6956521739130435,0.7027714213068904,0.7083333333333334
-Decision Tree,"{'criterion': 'gini', 'splitter': 'random'}",0.6086956521739131,0.6019635343618512,0.5541666666666667
-Logistic Regression,"{'C': 0.5, 'penalty': 'l1', 'solver': 'liblinear'}",0.782608695652174,0.7852544316077257,0.775
-Support Vector Machine,"{'C': 1, 'gamma': 'scale', 'kernel': 'linear'}",0.6521739130434783,0.6590752242926156,0.6458333333333333
-Naive Bayes,{},0.34782608695652173,0.24464238469000793,0.4708333333333333
-XG-boost,"{'learning_rate': 1.0, 'n_estimators': 100, 'objective': 'binary:logistic'}",0.6956521739130435,0.7027714213068904,0.7083333333333334
