@@ -166,7 +166,7 @@ remove_outliers = [
     remove_outliers_isolation_forest,
     remove_outliers_zscore,
     remove_outliers_iqr,
-    # remove_outliers_dbscan,
+    remove_outliers_dbscan,
     remove_outliers_lof,
 ]
 
@@ -181,7 +181,7 @@ features_selection = [
 oversampling = [
     oversampling_none,
     oversampling_smote,
-    oversampling_svm_smote,
+    # oversampling_svm_smote,
     oversampling_adasyn,
     oversampling_smote_borderline,
     oversampling_nc_smote,
