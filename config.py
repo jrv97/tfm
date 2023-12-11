@@ -27,3 +27,13 @@ DATA_6_PATH = "data/final_datasets/6/DBS.csv"
 DATA_6_IGNORED_FEAT = ["acad_year", "access", "year"]
 DATA_6_TARGET = "graduate"
 DATA_6_NAME = "dataset 6"
+# # DATASET 7
+DATA_7_PATH = "data/final_datasets/7/DSA.csv"
+DATA_7_IGNORED_FEAT = []
+DATA_7_TARGET = "label"
+DATA_7_NAME = "dataset 7"
+# # DATASET 8
+DATA_8_PATH = "data/final_datasets/8/mendeley.csv"
+DATA_8_IGNORED_FEAT = []
+DATA_8_TARGET = "label"
+DATA_8_NAME = "dataset 8"
