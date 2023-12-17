@@ -5,7 +5,7 @@
 # DATA_1_TARGET = "Target"
 # # DATASET 2
 DATA_2_PATH = "data/final_datasets/2/original.csv"
-DATA_2_IGNORED_FEAT = []
+DATA_2_IGNORED_FEAT = ["Unnamed: 20", "Unnamed: 21"]
 DATA_2_TARGET = "label (fail=1, pass=0)"
 DATA_2_NAME = "dataset 2"
 # # DATASET 3

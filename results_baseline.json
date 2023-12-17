@@ -1,5 +1,105 @@
 [
     {
+        "Dataset": "dataset 2",
+        "Model": "DecisionTreeClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.8333333333333334,
+        "Precision": 0.3333333333333333,
+        "Recall": 0.5,
+        "F1-Score": 0.4,
+        "ROC-AUC": 0.6875
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "LogisticRegression",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9444444444444444,
+        "Precision": 1.0,
+        "Recall": 0.5,
+        "F1-Score": 0.6666666666666666,
+        "ROC-AUC": 0.96875
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "RandomForestClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9444444444444444,
+        "Precision": 1.0,
+        "Recall": 0.5,
+        "F1-Score": 0.6666666666666666,
+        "ROC-AUC": 0.890625
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "KNeighborsClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9444444444444444,
+        "Precision": 1.0,
+        "Recall": 0.5,
+        "F1-Score": 0.6666666666666666,
+        "ROC-AUC": 0.65625
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "SVC",
+        "Configuration": "Baseline",
+        "Accuracy": 0.8888888888888888,
+        "Precision": 0.0,
+        "Recall": 0.0,
+        "F1-Score": 0.0,
+        "ROC-AUC": 0.84375
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "GaussianNB",
+        "Configuration": "Baseline",
+        "Accuracy": 0.5555555555555556,
+        "Precision": 0.2,
+        "Recall": 1.0,
+        "F1-Score": 0.33333333333333337,
+        "ROC-AUC": 0.8125
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "MLPClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9444444444444444,
+        "Precision": 1.0,
+        "Recall": 0.5,
+        "F1-Score": 0.6666666666666666,
+        "ROC-AUC": 1.0
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "VotingClassifierSoft",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9444444444444444,
+        "Precision": 1.0,
+        "Recall": 0.5,
+        "F1-Score": 0.6666666666666666,
+        "ROC-AUC": 0.875
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "VotingClassifierHard",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9444444444444444,
+        "Precision": 1.0,
+        "Recall": 0.5,
+        "F1-Score": 0.6666666666666666,
+        "ROC-AUC": null
+    },
+    {
+        "Dataset": "dataset 2",
+        "Model": "AdaBoostClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.8888888888888888,
+        "Precision": 0.5,
+        "Recall": 0.5,
+        "F1-Score": 0.5,
+        "ROC-AUC": 0.71875
+    },
+    {
         "Dataset": "dataset 4",
         "Model": "DecisionTreeClassifier",
         "Configuration": "Baseline",
@@ -71,13 +171,33 @@
     },
     {
         "Dataset": "dataset 4",
-        "Model": "TrAdaBoost",
+        "Model": "VotingClassifierSoft",
         "Configuration": "Baseline",
-        "Accuracy": 0.7444444444444445,
-        "Precision": 0.6111111111111112,
-        "Recall": 0.4074074074074074,
-        "F1-Score": 0.4888888888888889,
+        "Accuracy": 0.7333333333333333,
+        "Precision": 0.5555555555555556,
+        "Recall": 0.5555555555555556,
+        "F1-Score": 0.5555555555555556,
+        "ROC-AUC": 0.811875367430923
+    },
+    {
+        "Dataset": "dataset 4",
+        "Model": "VotingClassifierHard",
+        "Configuration": "Baseline",
+        "Accuracy": 0.7666666666666667,
+        "Precision": 0.6363636363636364,
+        "Recall": 0.5185185185185185,
+        "F1-Score": 0.5714285714285714,
         "ROC-AUC": null
+    },
+    {
+        "Dataset": "dataset 4",
+        "Model": "AdaBoostClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.8666666666666667,
+        "Precision": 0.7419354838709677,
+        "Recall": 0.8518518518518519,
+        "F1-Score": 0.7931034482758621,
+        "ROC-AUC": 0.8624338624338624
     },
     {
         "Dataset": "dataset 5",
@@ -151,13 +271,33 @@
     },
     {
         "Dataset": "dataset 5",
-        "Model": "TrAdaBoost",
+        "Model": "VotingClassifierSoft",
         "Configuration": "Baseline",
-        "Accuracy": 0.6708860759493671,
-        "Precision": 0.5,
+        "Accuracy": 0.7215189873417721,
+        "Precision": 0.6428571428571429,
         "Recall": 0.34615384615384615,
-        "F1-Score": 0.40909090909090906,
+        "F1-Score": 0.45,
+        "ROC-AUC": 0.6973875181422351
+    },
+    {
+        "Dataset": "dataset 5",
+        "Model": "VotingClassifierHard",
+        "Configuration": "Baseline",
+        "Accuracy": 0.7088607594936709,
+        "Precision": 0.6363636363636364,
+        "Recall": 0.2692307692307692,
+        "F1-Score": 0.37837837837837834,
         "ROC-AUC": null
+    },
+    {
+        "Dataset": "dataset 5",
+        "Model": "AdaBoostClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.6075949367088608,
+        "Precision": 0.4074074074074074,
+        "Recall": 0.4230769230769231,
+        "F1-Score": 0.4150943396226415,
+        "ROC-AUC": 0.5605950653120465
     },
     {
         "Dataset": "dataset 6",
@@ -231,13 +371,33 @@
     },
     {
         "Dataset": "dataset 6",
-        "Model": "TrAdaBoost",
+        "Model": "VotingClassifierSoft",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9846153846153847,
+        "Precision": 1.0,
+        "Recall": 0.9807692307692307,
+        "F1-Score": 0.9902912621359222,
+        "ROC-AUC": 1.0
+    },
+    {
+        "Dataset": "dataset 6",
+        "Model": "VotingClassifierHard",
         "Configuration": "Baseline",
         "Accuracy": 0.9846153846153847,
         "Precision": 1.0,
         "Recall": 0.9807692307692307,
         "F1-Score": 0.9902912621359222,
         "ROC-AUC": null
+    },
+    {
+        "Dataset": "dataset 6",
+        "Model": "AdaBoostClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 1.0,
+        "Precision": 1.0,
+        "Recall": 1.0,
+        "F1-Score": 1.0,
+        "ROC-AUC": 1.0
     },
     {
         "Dataset": "dataset 7",
@@ -311,13 +471,33 @@
     },
     {
         "Dataset": "dataset 7",
-        "Model": "TrAdaBoost",
+        "Model": "VotingClassifierSoft",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9818181818181818,
+        "Precision": 0.9787234042553191,
+        "Recall": 1.0,
+        "F1-Score": 0.989247311827957,
+        "ROC-AUC": 1.0
+    },
+    {
+        "Dataset": "dataset 7",
+        "Model": "VotingClassifierHard",
+        "Configuration": "Baseline",
+        "Accuracy": 0.9818181818181818,
+        "Precision": 0.9787234042553191,
+        "Recall": 1.0,
+        "F1-Score": 0.989247311827957,
+        "ROC-AUC": null
+    },
+    {
+        "Dataset": "dataset 7",
+        "Model": "AdaBoostClassifier",
         "Configuration": "Baseline",
         "Accuracy": 1.0,
         "Precision": 1.0,
         "Recall": 1.0,
         "F1-Score": 1.0,
-        "ROC-AUC": null
+        "ROC-AUC": 1.0
     },
     {
         "Dataset": "dataset 8",
@@ -391,12 +571,32 @@
     },
     {
         "Dataset": "dataset 8",
-        "Model": "TrAdaBoost",
+        "Model": "VotingClassifierSoft",
         "Configuration": "Baseline",
         "Accuracy": 0.8387096774193549,
-        "Precision": 0.4,
-        "Recall": 0.5,
-        "F1-Score": 0.4444444444444445,
+        "Precision": 0.0,
+        "Recall": 0.0,
+        "F1-Score": 0.0,
+        "ROC-AUC": 0.9444444444444444
+    },
+    {
+        "Dataset": "dataset 8",
+        "Model": "VotingClassifierHard",
+        "Configuration": "Baseline",
+        "Accuracy": 0.8709677419354839,
+        "Precision": 0.0,
+        "Recall": 0.0,
+        "F1-Score": 0.0,
         "ROC-AUC": null
+    },
+    {
+        "Dataset": "dataset 8",
+        "Model": "AdaBoostClassifier",
+        "Configuration": "Baseline",
+        "Accuracy": 0.8709677419354839,
+        "Precision": 0.5,
+        "Recall": 0.5,
+        "F1-Score": 0.5,
+        "ROC-AUC": 0.7129629629629629
     }
 ]
